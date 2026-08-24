@@ -77,3 +77,23 @@ Plasma hardcodes 3-finger left/right to virtual desktops. There is no System Set
 | 3-finger swipe right | Forward |
 
 Edit `three-finger-nav/config.yaml`, then `./three-finger-nav.sh reload`.
+
+## Vim as default editor + passwordless sudo
+
+Fresh Kubuntu uses nano as `/usr/bin/editor` and prompts for a sudo password.
+
+```bash
+./vim-sudo.sh apply     # needs sudo once; afterwards sudo is passwordless
+./vim-sudo.sh revert    # stock editor env + sudo password prompt
+./vim-sudo.sh status
+```
+
+| Item | Result |
+| --- | --- |
+| `vim` package | Installed (`vim.basic`, not `vim-tiny`) |
+| `/usr/bin/editor` | `vim.basic` |
+| `EDITOR` / `VISUAL` / `SUDO_EDITOR` | `vim` in bash, login shells, Plasma session env, `/etc/environment` |
+| `git config core.editor` | `vim` |
+| sudo | `murat ALL=(ALL:ALL) NOPASSWD:ALL` in `/etc/sudoers.d/99-nopasswd-$USER` |
+
+`revert --purge` also removes the vim package if this script installed it. New terminals pick up `EDITOR` immediately; Plasma GUI apps need a re-login.
