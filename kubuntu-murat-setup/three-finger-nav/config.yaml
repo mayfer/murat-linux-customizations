@@ -1,0 +1,20 @@
+# managed by kubuntu-murat-setup three-finger-nav.sh
+# 3-finger swipe: back / forward in apps
+# swipe left = Back, swipe right = Forward
+touchpad:
+  gestures:
+    - type: swipe
+      fingers: 3
+      direction: left
+      actions:
+        - on: begin
+          input:
+            - keyboard: [ leftalt+left ]
+
+    - type: swipe
+      fingers: 3
+      direction: right
+      actions:
+        - on: begin
+          input:
+            - keyboard: [ leftalt+right ]

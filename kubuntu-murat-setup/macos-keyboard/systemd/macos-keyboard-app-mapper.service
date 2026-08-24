@@ -1,0 +1,12 @@
+[Unit]
+Description=keyd application mapper (macOS terminal shortcuts)
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sg keyd -c /usr/bin/keyd-application-mapper
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target
