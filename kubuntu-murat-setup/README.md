@@ -78,6 +78,26 @@ Plasma hardcodes 3-finger left/right to virtual desktops. There is no System Set
 
 Edit `three-finger-nav/config.yaml`, then `./three-finger-nav.sh reload`.
 
+## Window tiling (Ctrl+Alt)
+
+KWin already has half-screen quick tile and maximize. Center (75% of the work area) is a small KWin script, because KWin’s built-in “Move Window to the Center” does not resize.
+
+```bash
+./window-tiles.sh apply
+./window-tiles.sh revert
+./window-tiles.sh status
+```
+
+| Shortcut | Result |
+| --- | --- |
+| Ctrl+Alt+Left / Right / Up / Down | Tile the window to that half of the screen |
+| Ctrl+Alt+Enter | Resize to 75% of the work area and center |
+| Ctrl+Alt+F | Maximize |
+
+On the Magic Keyboard that is Control+Option. The keyd map would otherwise turn Option+arrows into word-jump (`Ctrl+arrows`), so `[opt+control]` in `macos-keyboard/keyd/macos-magic-keyboard.conf` passes those chords through as Ctrl+Alt. Reload keyd after changing it: `./macos-keyboard.sh reload`.
+
+Stock Meta+arrow tiling and Meta+PgUp maximize are left in place. These are KWin **Quick Tile** halves, not the Meta+T custom tile editor. Change the 75% in `window-tiles/muratcenter75/contents/code/main.js` (`SCALE`), then `./window-tiles.sh apply`.
+
 ## Vim as default editor + passwordless sudo
 
 Fresh Kubuntu uses nano as `/usr/bin/editor` and prompts for a sudo password.

@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "KWin/Script",
+    "KPlugin": {
+        "Description": "Resize the active window to 75% of the work area and center it",
+        "Icon": "preferences-system-windows",
+        "Id": "muratcenter75",
+        "License": "MIT",
+        "Name": "Center window 75%",
+        "Version": "1.0"
+    },
+    "X-Plasma-API": "javascript",
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-MainScript": "code/main.js"
+}
