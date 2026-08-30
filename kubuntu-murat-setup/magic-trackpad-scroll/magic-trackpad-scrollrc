@@ -1,0 +1,42 @@
+# managed by kubuntu-murat-setup magic-trackpad-scroll.sh
+
+[Device]
+# Apple Magic Trackpad 2 / USB-C Magic Trackpad on this machine.
+Vendor=1452
+Product=613
+
+[Response]
+# Slow motions stay precise. Gain rises continuously with finger speed; there
+# is no acceleration threshold or sudden fast mode.
+LowSpeedGain=0.50
+HighSpeedGain=1.35
+CurveVelocity=950
+CurveExponent=1.30
+SpeedSmoothingMs=28
+
+[Momentum]
+Enabled=true
+# Release velocity is estimated from recent transformed KWin events.
+VelocityWindowMs=80
+VelocityWeightMs=38
+ReleaseStaleMs=70
+LaunchScale=0.82
+NoiseFloor=6
+MaximumVelocity=5000
+# Fast flicks get a longer time constant, while small flicks remain controlled.
+MinimumTimeConstantMs=280
+MaximumTimeConstantMs=620
+TimeConstantVelocity=1600
+# The final frame is below a visible sub-pixel displacement before stopping.
+StopVelocity=1.5
+MaximumFrameMs=50
+
+[Behaviour]
+# "continuous" prevents applications from adding a second finger-scroll
+# momentum animation. The plugin owns the full active+momentum transaction.
+OutputSource=continuous
+CancelOnPointerMotion=true
+CancelOnKey=true
+CancelOnButton=true
+# One journal line per completed gesture is useful while tuning.
+Diagnostics=true

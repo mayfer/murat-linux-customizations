@@ -1,0 +1,14 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Murat local setup"
+            }
+        ],
+        "Category": "Tools",
+        "Description": "Low-latency nonlinear scrolling and compositor-owned momentum for one Apple Magic Trackpad",
+        "EnabledByDefault": false,
+        "License": "GPL-2.0-or-later",
+        "Name": "Murat Magic Trackpad Scroll"
+    }
+}

@@ -78,6 +78,52 @@ Plasma hardcodes 3-finger left/right to virtual desktops. There is no System Set
 
 Edit `three-finger-nav/config.yaml`, then `./three-finger-nav.sh reload`.
 
+## macOS-like Magic Trackpad scrolling
+
+This builds a small binary KWin effect for Apple Magic Trackpad `05ac:0265`.
+It intercepts the trackpad's finger-axis events immediately before KWin's
+normal client-forwarding filter, applies a smooth velocity-dependent gain, and
+owns the momentum phase inside the compositor. Applications receive one
+continuous scroll transaction rather than native finger input plus a second
+synthetic wheel stream.
+
+```bash
+./magic-trackpad-scroll.sh apply     # build, test, install, and safely load the effect
+./magic-trackpad-scroll.sh revert    # unload/remove and restore exact prior config
+./magic-trackpad-scroll.sh status
+./magic-trackpad-scroll.sh reload    # after editing magic-trackpad-scrollrc
+./magic-trackpad-scroll.sh rebuild   # after a KWin upgrade
+./magic-trackpad-scroll.sh logs      # release velocity diagnostics for tuning
+```
+
+The first load is crash-safe: the persistent KWin setting remains disabled
+until the freshly built plugin has loaded successfully. KWin binary plugins
+must be rebuilt after KWin releases because their ABI is not stable. The
+installer records the exact KWin package version and reports mismatches in
+`status`.
+
+Tune `magic-trackpad-scroll/magic-trackpad-scrollrc`:
+
+| Setting | Effect |
+| --- | --- |
+| `LowSpeedGain` | Precision for small finger motions |
+| `HighSpeedGain` | Maximum response for large/fast motions |
+| `CurveVelocity` | How gradually gain moves from low to high |
+| `LaunchScale` | Momentum's initial speed relative to measured release speed |
+| `MinimumTimeConstantMs` | Tail length for small flicks |
+| `MaximumTimeConstantMs` | Tail length for fast flicks |
+
+There is deliberately no user-facing minimum flick velocity cliff. `NoiseFloor`
+only suppresses an imperceptibly small tail caused by measurement noise. The
+momentum integrator uses continuous exponential decay and sends its final stop
+below a sub-pixel-per-frame velocity.
+
+The plugin does not need `/dev/input`, `/dev/uinput`, a udev rule, or a
+background service, and it leaves KWin's device scroll factor unchanged. It
+also leaves libinput unchanged, so libinput's built-in two-finger activation
+distance is still present. A device-specific libinput threshold patch is a
+separate second step if the compositor plugin is otherwise successful.
+
 ## Window tiling (Ctrl+Alt)
 
 KWin already has half-screen quick tile and maximize. Center (75% of the work area) is a small KWin script, because KWin’s built-in “Move Window to the Center” does not resize.
